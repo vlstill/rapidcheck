@@ -13,7 +13,9 @@
 #include <type_traits>
 #include <array>
 #include <sstream>
-
+#if __cplusplus > 201402L && defined(__has_include) && __has_include(<variant>)
+#include <variant>
+#endif
 #include "rapidcheck/detail/Traits.h"
 
 namespace rc {
@@ -184,6 +186,13 @@ template <typename T, std::size_t N>
 void showValue(const std::array<T, N> &value, std::ostream &os) {
   showCollection("[", "]", value, os);
 }
+
+#if __cplusplus > 201402L && defined(__has_include) && __has_include(<variant>)
+template<typename... Ts>
+void showValue(const std::variant<Ts...> &value, std::ostream &os) {
+    std::visit([&os]( const auto &v ) { show(v, os); }, value);
+}
+#endif
 
 RC_SFINAE_TRAIT(HasShowValue, decltype(showValue(std::declval<T>(), std::cout)))
 
