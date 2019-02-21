@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "rapidcheck/Config.h"
 
 namespace rc {
 
@@ -15,6 +16,11 @@ bool check(Testable &&testable);
 /// output.
 template <typename Testable>
 bool check(const std::string &description, Testable &&testable);
+
+/// Same as `check(std::string, Testable &&)` but also takes a configuration
+/// which can override the default configuration given by RC_PARAM.
+template <typename Testable>
+bool check(const std::string &description, const Config &config, Testable &&testable);
 
 } // namespace rc
 

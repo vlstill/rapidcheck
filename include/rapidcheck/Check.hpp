@@ -27,6 +27,7 @@ TestResult checkProperty(const Property &property,
                          const TestParams &params);
 
 TestResult checkProperty(const Property &property,
+                         const Config &config,
                          const TestMetadata &metadata);
 
 // Uses defaults from configuration
@@ -47,6 +48,11 @@ bool check(Testable &&testable) {
 
 template <typename Testable>
 bool check(const std::string &description, Testable &&testable) {
+    return check(description, Config(), std::forward<Testable>(testable));
+}
+
+template <typename Testable>
+bool check(const std::string &description, const Config &config, Testable &&testable) {
   using namespace rc::detail;
 
   // Force loading of the configuration so that message comes _before_ the
@@ -61,7 +67,7 @@ bool check(const std::string &description, Testable &&testable) {
   metadata.id = description;
   metadata.description = description;
   const auto result =
-      detail::checkTestable(std::forward<Testable>(testable), metadata);
+      detail::checkTestable(std::forward<Testable>(testable), config, metadata);
 
   printResultMessage(result, std::cerr);
   std::cerr << std::endl;

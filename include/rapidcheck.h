@@ -36,3 +36,4 @@
 #include "rapidcheck/Classify.h"
 #include "rapidcheck/Log.h"
 #include "rapidcheck/Show.h"
+#include "rapidcheck/Config.h"
