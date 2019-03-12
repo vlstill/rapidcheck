@@ -29,6 +29,7 @@ ReproduceListener::~ReproduceListener() {
         << "reproduce these, run with:" << std::endl
         << "RC_PARAMS=\"reproduce=" << reproduceMapToString(m_reproduceMap)
         << "\"" << std::endl;
+  std::exit( 1 );
 }
 
 } // namespace detail
